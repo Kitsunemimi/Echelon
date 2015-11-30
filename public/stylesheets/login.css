@@ -10,9 +10,12 @@
 #signup-orange {
 	background-image: url('../images/reg-bg.png');
 }
+#login-error {
+	display: none;
+}
 .login-form { 
 	padding: 10px 0px;
 }
-#login-btn {
+.fullwidth {
 	width: 100%;
 }

@@ -2,14 +2,16 @@ extends layout
 
 block content
 	div.login-container#signup-orange
+		div#login-error.alert.alert-danger.fullwidth
+		
 		h3 Register for an account
-		form.login(class="login-form", role="form")
+		form#register(class="login-form", role="form", method="post")
 			div.form-group
-				input#email(type="email", class="input form-control", placeholder="Email", required)
+				input#email(type="email", class="input form-control", name="email", placeholder="Email", required)
 			div.form-group
-				input#pwd(type="password", class="input form-control", placeholder="Password", required)
+				input#pwd(type="password", class="input form-control", name="password", placeholder="Password", required)
 			div.form-group
-				input#confirm(type="password", class="input form-control", placeholder="Confirm Password", required)
-			button#login-btn(type="submit", class="btn btn-success login-button") Sign up
+				input#confirm(type="password", class="input form-control", name="confirm", placeholder="Confirm Password", required)
+			button#login-btn(type="submit", class="btn btn-success fullwidth") Sign up
 		p(style="text-align: right") Or, log in 
 			a(href="/login") here

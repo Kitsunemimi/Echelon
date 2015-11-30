@@ -2,12 +2,14 @@ extends layout
 
 block content
 	div.login-container#login-blue
+		div#login-error.alert.alert-danger.fullwidth
+		
 		h3 Log in to your account
-		form.login(class="login-form", role="form")
+		form#login(class="login-form", role="form", method="post")
 			div.form-group
-				input#email(type="email", class="input form-control", placeholder="Email", required)
+				input#email(type="email", class="input form-control", name="email", placeholder="Email", required)
 			div.form-group
-				input#pwd(type="password", class="input form-control", placeholder="Password", required)
-			button#login-btn(type="submit", class="btn btn-success login-button") Log in
+				input#pwd(type="password", class="input form-control", name="password", placeholder="Password", required)
+			button#login-btn(type="submit", class="btn btn-success fullwidth") Log in
 		p(style="text-align: right") Or, 
 			a(href="/register") register for an account
