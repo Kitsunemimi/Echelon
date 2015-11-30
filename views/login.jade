@@ -1,4 +1,13 @@
 extends layout
 
 block content
-	p login page
+	div.login-container#login-blue
+		h3 Log in to your account
+		form.login(class="login-form", role="form")
+			div.form-group
+				input#email(type="email", class="input form-control", placeholder="Email", required)
+			div.form-group
+				input#pwd(type="password", class="input form-control", placeholder="Password", required)
+			button#login-btn(type="submit", class="btn btn-success login-button") Log in
+		p(style="text-align: right") Or, 
+			a(href="/register") register for an account

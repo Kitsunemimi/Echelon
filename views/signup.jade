@@ -1,4 +1,15 @@
 extends layout
 
 block content
-	p sign up page
+	div.login-container#signup-orange
+		h3 Register for an account
+		form.login(class="login-form", role="form")
+			div.form-group
+				input#email(type="email", class="input form-control", placeholder="Email", required)
+			div.form-group
+				input#pwd(type="password", class="input form-control", placeholder="Password", required)
+			div.form-group
+				input#confirm(type="password", class="input form-control", placeholder="Confirm Password", required)
+			button#login-btn(type="submit", class="btn btn-success login-button") Sign up
+		p(style="text-align: right") Or, log in 
+			a(href="/login") here
