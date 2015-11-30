@@ -1,0 +1,21 @@
+.login-container {
+	background-repeat: no-repeat;
+	padding: 60px 336px;
+	height: 100%;
+	text-align: center;
+}
+#login-blue {
+	background-image: url('../images/login-bg.png');
+}
+#signup-orange {
+	background-image: url('../images/reg-bg.png');
+}
+#login-error {
+	display: none;
+}
+.login-form { 
+	padding: 10px 0px;
+}
+.fullwidth {
+	width: 100%;
+}
