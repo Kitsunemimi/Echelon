@@ -46,7 +46,7 @@ router.post('/register', function(req, res, next) {
 });
 
 router.get('/profile',function(req, res, next){
-	res.render('profile', {id: 'Hello'});
+	res.render('profile', {id: 'hello'});
 });
 
 module.exports = router;
