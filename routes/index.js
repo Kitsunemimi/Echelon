@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.render('index', { title: 'Kijiji' });
 });
 
 /* Other general routes */
@@ -21,7 +21,8 @@ router.post('/login', function(req, res, next) {
 	// Check if password is correct
 	var email = req.body.email;
 	var password = req.body.password;
-	res.status(200).send("Email: " + email + "<br/>Password: " + password);
+	//res.status(200).send("Email: " + email + "<br/>Password: " + password);
+	res.redirect('/profile');
 });
 
 // Register page
@@ -40,7 +41,12 @@ router.post('/register', function(req, res, next) {
 	var password = req.body.password;
 	var confirm = req.body.confirm;
 	var matching = password == confirm;
-	res.status(200).send("Email: " + email + "<br/>Password: " + password + "<br/>Matching: " + matching);
+	//res.status(200).send("Email: " + email + "<br/>Password: " + password + "<br/>Matching: " + matching);
+	res.redirect('/profile');
+});
+
+router.get('/profile',function(req, res, next){
+	res.render('profile', {id: 'Hello'});
 });
 
 module.exports = router;
