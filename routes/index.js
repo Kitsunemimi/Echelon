@@ -22,7 +22,7 @@ router.post('/login', function(req, res, next) {
 	var email = req.body.email;
 	var password = req.body.password;
 	//res.status(200).send("Email: " + email + "<br/>Password: " + password);
-	res.redirect('/profile');
+	res.redirect('/');
 });
 
 // Register page
@@ -42,11 +42,7 @@ router.post('/register', function(req, res, next) {
 	var confirm = req.body.confirm;
 	var matching = password == confirm;
 	//res.status(200).send("Email: " + email + "<br/>Password: " + password + "<br/>Matching: " + matching);
-	res.redirect('/profile');
-});
-
-router.get('/profile',function(req, res, next){
-	res.render('profile', {id: 'hello'});
+	res.redirect('/');
 });
 
 module.exports = router;

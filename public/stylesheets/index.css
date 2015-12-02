@@ -1,0 +1,43 @@
+#index-container {
+	padding: 30px;
+}
+#index-container2 {
+	margin-top: 30px;
+	height: 285px;
+	border: 1px solid black;
+}
+#top-listing-container {
+	display: inline-block;
+	float: left;
+	height: 285px;
+	padding: 12px 30px;
+	text-align: center;
+}
+#welcome-container {
+	display: inline-block;
+	float: right;
+	width: 345px;
+	height: 100%;
+	padding: 0px 50px;
+	border-left: 1px solid black;
+	text-align: center;
+}
+#welcome {
+	display: flex;
+	flex-direction: column;
+}
+.welcome-spacer {
+	flex: 1;
+}
+
+.top-listing {
+	width: 500px;
+	height: 220px;
+	margin-top: 12px;
+	border: 1px solid black;
+}
+.top-listing-info {
+	width: 205px;
+	height: 100%;
+	float: right;
+}

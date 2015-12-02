@@ -1,9 +1,19 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
-	a(href='/register' class='btn btn-success') Register
-	p
-	a(href='/login' class='btn btn-success') Log In 
-
+	div#index-container
+		div#index-container2
+			div#top-listing-container
+				h3.no-margin Top Listing
+				div.top-listing
+					img(width='293', height='220', src='', style='float: left')
+					div.top-listing-info
+			
+			div#welcome-container
+				div#welcome
+					div.welcome-spacer
+					p Welcome to #{title}
+					a(href='/register' class='btn btn-success') Register
+					a(href='/login' class='btn btn-success') Log In 
+					div.welcome-spacer
+			
