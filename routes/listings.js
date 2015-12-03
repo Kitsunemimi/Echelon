@@ -3,6 +3,7 @@ var router = express.Router();
 
 // TODO: Implement add/edit/remove APIs as discussed in meeting
 function addListing(poster, title, description, picture, tags) {
+	var id = stats.listCount;
 	return id;
 }
 

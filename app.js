@@ -35,6 +35,7 @@ var ListingSchema = mongoose.Schema({
 });
 var StatsSchema = mongoose.Schema({
 	regCount: Number,
+	listCount: Number
 });
 
 var User = mongoose.model('User', UserSchema);
@@ -46,7 +47,8 @@ ServerStats.find(function (err, results) {
 	if(!results.length) {
 		console.log("Tracking fresh server stats");
 		var newStats = new ServerStats({
-			regCount: 0
+			regCount: 0,
+			listCount: 0
 		});
 		
 		newStats.save(function (err) {
