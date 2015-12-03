@@ -1,6 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
+// TODO: Implement add/edit/remove APIs as discussed in meeting
+function addListing(poster, title, description, picture, tags) {
+	return id;
+}
+
+function editListing(id, title, description, picture, tags) {
+	return;
+}
+
+function removeListing(id) {
+	// return true if successful
+	return true;
+}
+
+
 /* GET all listings. */
 router.get('/', function(req, res, next) {
 	res.render('listings-all', { title: 'Express' });
