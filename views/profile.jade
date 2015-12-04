@@ -1,9 +1,52 @@
 extends layout
 
 block content
-	div.profile-container
-		h3 Profile Page
-		p = email
+	div#profile-container
+		div#profile-container2
+			img(width='200', height='200', src='', style='float: left')
+			div#profile-inset
+			div#profile-info
+				h2.no-margin Name
+				p <b>Email:</b> asdf@derp.ca
+				p <b>Location:</b> asdf
+				p <b>Description:</b> asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
+		
+		div#profile-buttons
+			button#edit-profile(class="btn btn-default" onclick="toggleEdit();") Edit profile
+			button#delete-user(class="btn btn-default" onclick="") Delete profile
+			button#make-admin(class="btn btn-default" onclick="") Make admin
+			button#de-admin(class="btn btn-default" onclick="") Revoke admin
+		
+		h3 #{name}'s Listings
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+
 		
 
 
