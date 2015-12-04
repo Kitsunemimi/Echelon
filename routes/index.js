@@ -3,7 +3,15 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Kijiji' });
+	var name = ""
+	if(req.user) {
+		if(req.user.name) {
+			name = req.user.name;
+		} else {
+			name = req.user.email;
+		}
+	}
+	res.render('index', {title: "KiBay", name: name});
 });
 
 /* Other general routes */
@@ -26,7 +34,49 @@ router.post('/login', function(req, res, next) {
 	// Check if password is correct
 	var email = req.body.email;
 	var password = req.body.password;
-	//res.status(200).send("Email: " + email + "<br/>Password: " + password);
+	var error = "";
+	console.log("Login: Email = " + email + ", Password = " + password);
+	
+	// Validation
+	parts = email.split('@');
+	if(!email || parts.length < 2 || parts[1].split('.').length < 2){
+		error = "Please enter a valid email address.";
+	}
+	if(!password) {
+		error = "Please enter a password.";
+	}
+	
+	if(error) {
+		res.render('login', {title: "Sign up - KiBay", error: error});
+		return;
+	}
+	
+	User.findOne({'email': email}, function (err, user) {
+		if(err) {
+			// Something went wrong
+			console.log("Error occurred during login");
+			res.render('login', {title: "Sign up - KiBay", error: "Something went wrong at the server."});
+			return;
+		}
+		
+		if(!user) {
+			console.log("User not found!");
+			res.render('signup', {title: "Sign up - KiBay", error: "Username or password incorrect."});
+			return;
+		} else if(user.password != password) {
+			console.log("Password incorrect");
+			res.render('signup', {title: "Sign up - KiBay", error: "Username or password incorrect."});
+			return;
+		} else {
+			// Log in the user
+			req.session.user = user;
+			res.redirect('/');
+		}
+	});
+});
+// Logout function
+router.get('/logout', function (req, res) {
+	req.session.reset();
 	res.redirect('/');
 });
 
