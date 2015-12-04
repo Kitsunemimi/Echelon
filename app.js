@@ -30,8 +30,27 @@ db.once('open', function callback () {
 
 // TODO: Implement Schemas as described in meeting
 var UserSchema = mongoose.Schema({
+	id: Number,
+	email: String,
+	password: String,
+	name: String,
+	description: String,
+	picture: String, 
+	location: String,
+	listings: Array,
+	admin: Boolean	
 });
 var ListingSchema = mongoose.Schema({
+	id: Number,
+	poster: String,
+	title: String,
+	description: String,
+	price: Number,
+	picture: String, 
+	comments: [{poster: String, date: Date, text: String}],
+	date: {type: Date, default: Date.now},
+	hits: Number,
+	tags: Array
 });
 var StatsSchema = mongoose.Schema({
 	regCount: Number,
