@@ -14,7 +14,7 @@ function addListing(poster, title, description, price, picture, tags) {
 		tags: []
 	});
 	
-	newlisting.save(function (err) {
+	newListing.save(function (err) {
 		if(err) {
 			console.log("Error occurred when creating lsiting");
 			return -1;
@@ -59,12 +59,12 @@ function editListing(id, title, description, price, picture, tags) {
 function removeListing(id) {
 	Listing.findOne({id: id}, function (err, listing) {
 		var title = listing.title;
-		listing.remove({id: id}, function (err) {
+		Listing.remove({id: id}, function (err) {
 			if(err) {
 				return false;
 			}
 			
-			console.log("listing" + title + "has been deleted.");
+			console.log("Listing" + title + "has been deleted.");
 		});
 	});
 	
