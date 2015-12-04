@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-// TODO: Implement add/edit/remove APIs as discussed in meeting
 function addUser(email, password) {
+	var id = stats.regCount;
+	
 	// Create a new user
 	var newUser = new User({
-		id: stats.regCount,
+		id: id,
 		email: email,
 		password: password,
 		name: "",
@@ -31,7 +32,7 @@ function addUser(email, password) {
 			}
 		});
 	});
-
+	return id;
 }
 
 function editUser(id, name, picture, location) {
@@ -99,6 +100,25 @@ router.get('/', function(req, res, next) {
 	// not sure if we need a listing for all users, so will probably kill this
 	// block
 	res.send('respond with a resource');
+});
+
+// Create a new user
+router.get('/new', function(req, res, next) {
+	var email = req.query.email;
+	var password = req.query.password;
+	
+	// Attempt to create the user
+	id = addUser(email, password);
+	console.log("ID: " + id);
+
+	if(id == -1) {
+		res.render('signup', {title: "Sign up - KiBay", error: "Something went wrong at the server."});
+		return;
+	} else if(id == 0) {
+		toggleAdmin(id);
+	}
+
+	res.redirect('/login?regSuccess=true');
 });
 
 // Get specific user profile

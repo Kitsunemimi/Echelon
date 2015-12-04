@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-// TODO: Implement add/edit/remove APIs as discussed in meeting
 function addListing(poster, title, description, price, picture, tags) {
 	// Create a new listing
 	var newListing = new Listing({

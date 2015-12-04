@@ -57,10 +57,10 @@ var StatsSchema = mongoose.Schema({
 	listCount: Number
 });
 
-var User = mongoose.model('User', UserSchema);
-var Listing = mongoose.model('Listing', ListingSchema);
-var ServerStats = mongoose.model('Stats', StatsSchema);
-var stats;
+User = mongoose.model('User', UserSchema);
+Listing = mongoose.model('Listing', ListingSchema);
+ServerStats = mongoose.model('Stats', StatsSchema);
+stats = undefined;
 // Initialize server stats if neccessary
 ServerStats.find(function (err, results) {
 	if(!results.length) {
