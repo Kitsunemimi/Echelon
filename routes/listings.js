@@ -5,7 +5,7 @@ var router = express.Router();
 function addListing(poster, title, description, price, picture, tags) {
 	// Create a new listing
 	var newListing = new Listing({
-		id = stats.listCount;
+		id: stats.listCount,
 		poster: poster,
 		title: title,
 		description: "",
