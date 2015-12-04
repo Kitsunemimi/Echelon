@@ -1,9 +1,69 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
-	a(href='/register' class='btn btn-success') Register
-	p
-	a(href='/login' class='btn btn-success') Log In 
-
+	div#index-container
+		div#index-container2
+			div#top-listing-container
+				h3.no-margin Top Listing
+				div.top-listing#main-listing
+					a(href='')
+						img(width='293', height='220', src='', style='float: left')
+					a.top-listing-info(href='')
+						h4.title title
+						p.desc listing description blah blah blah; to be populated
+						h4.price $19.95
+			
+			div#welcome-container
+				div.welcome#guest
+					div.welcome-spacer
+					h2 Welcome guest!
+					p Click a button to log in or sign up.
+					div.container-fluid
+						div.col-md-6
+							button(href='/login' class='btn btn-success') Log In
+						div.col-md-6
+							button(href='/register' class='btn btn-success') Register
+					div.welcome-spacer
+					
+				div.welcome#logged-in
+					div.welcome-spacer
+					h2 Welcome #{name}!
+					p What would you like to do?
+					div.container-fluid
+						div.col-md-12
+							button(href='/' class='btn btn-info') View your listings
+						div.col-md-12
+							button(href='/' class='btn btn-info') View your profile
+						div.col-md-12
+							button(href='/' class='btn btn-success') Create a listing
+					div.welcome-spacer
+		
+		h3 Recent Listings
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='')
+			a.listing-info(href='')
+				h4.title derp
+				p.desc abcd
+				h4.price $19.95
