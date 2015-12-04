@@ -20,9 +20,9 @@ block content
 					p Click a button to log in or sign up.
 					div.container-fluid
 						div.col-md-6
-							button(href='/login' class='btn btn-success') Log In
+							a(href='/login' class='btn btn-success fullwidth') Log In
 						div.col-md-6
-							button(href='/register' class='btn btn-success') Register
+							a(href='/register' class='btn btn-success fullwidth') Register
 					div.welcome-spacer
 					
 				div.welcome#logged-in
@@ -30,40 +30,43 @@ block content
 					h2 Welcome #{name}!
 					p What would you like to do?
 					div.container-fluid
-						div.col-md-12
-							button(href='/' class='btn btn-info') View your listings
-						div.col-md-12
-							button(href='/' class='btn btn-info') View your profile
-						div.col-md-12
-							button(href='/' class='btn btn-success') Create a listing
+						div.col-md-6
+							button(href='/' class='btn btn-info fullwidth') Your listings
+						div.col-md-6
+							button(href='/' class='btn btn-info fullwidth') Your profile
+						div.col-md-6
+							button(href='/' class='btn btn-success fullwidth') Create listing
+						div.col-md-6
+							a(href='/logout' class='btn btn-info fullwidth') Log out
 					div.welcome-spacer
 		
-		h3 Recent Listings
-		div.listing
-			a(href='')
-				img(width='174', height='130', src='')
-			a.listing-info(href='')
-				h4.title derp
-				p.desc abcd
-				h4.price $19.95
-		div.listing
-			a(href='')
-				img(width='174', height='130', src='')
-			a.listing-info(href='')
-				h4.title derp
-				p.desc abcd
-				h4.price $19.95
-		div.listing
-			a(href='')
-				img(width='174', height='130', src='')
-			a.listing-info(href='')
-				h4.title derp
-				p.desc abcd
-				h4.price $19.95
-		div.listing
-			a(href='')
-				img(width='174', height='130', src='')
-			a.listing-info(href='')
-				h4.title derp
-				p.desc abcd
-				h4.price $19.95
+		section#listings
+			h3 Recent Listings
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95

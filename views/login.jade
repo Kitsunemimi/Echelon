@@ -2,7 +2,8 @@ extends layout
 
 block content
 	div.login-container#login-blue
-		div#login-error.alert.alert-danger.fullwidth
+		div#login-success.alert.alert-success.fullwidth= success
+		div#login-error.alert.alert-danger.fullwidth= error
 		
 		h3 Log in to your account
 		form#login(class="login-form", role="form", method="post")
