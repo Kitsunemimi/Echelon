@@ -5,15 +5,58 @@ block content
 		div#index-container2
 			div#top-listing-container
 				h3.no-margin Top Listing
-				div.top-listing
-					img(width='293', height='220', src='', style='float: left')
-					div.top-listing-info
+				div.top-listing#main-listing
+					a(href='')
+						img(width='293', height='220', src='', style='float: left')
+					a.top-listing-info(href='')
+						h4 title
+						p listing description blah blah blah; to be populated
 			
 			div#welcome-container
-				div#welcome
+				div.welcome#guest
 					div.welcome-spacer
-					p Welcome to #{title}
-					a(href='/register' class='btn btn-success') Register
-					a(href='/login' class='btn btn-success') Log In 
+					h2 Welcome guest!
+					p Click a button to log in or sign up.
+					div.container-fluid
+						div.col-md-6
+							button(href='/login' class='btn btn-success') Log In
+						div.col-md-6
+							button(href='/register' class='btn btn-success') Register
 					div.welcome-spacer
-			
+					
+				div.welcome#logged-in
+					div.welcome-spacer
+					h2 Welcome #{name}!
+					p What would you like to do?
+					div.container-fluid
+						div.col-md-12
+							button(href='/login' class='btn btn-success') View your listings
+						div.col-md-12
+							button(href='/register' class='btn btn-success') View your profile
+					div.welcome-spacer
+		
+		h3 Recent Listings
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4 derp
+				p abcd
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4 derp
+				p abcd
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4 derp
+				p abcd
+		div.listing
+			a(href='')
+				img(width='174', height='130', src='', style='display: inline-block')
+			a.listing-info(href='')
+				h4 derp
+				p abcd
