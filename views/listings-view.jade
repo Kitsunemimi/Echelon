@@ -1,5 +1,75 @@
 extends layout
 
 block content
-	p listing page
-	p= id
+	div#listing-container
+		div#listing-container2
+			div#listing-pictures
+				img(width='200', height='150', src='')
+				div#other-pics-container
+					img.other-pics(src='')
+					img.other-pics(src='')
+					img.other-pics(src='')
+					img.other-pics(src='')
+				
+			div#listing-inset
+			div#full-listing-info
+				h2.no-margin Listing Title
+				h4 <b>Price:</b> $19.95
+				p <b>Seller:</b> asdf@derp.ca
+				p <b>Location:</b> asdf
+				p <b>Description:</b> asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
+		
+		div#listing-buttons
+			button#contact-seller(class="btn btn-default" onclick="toggleEdit();") Contact seller
+			button#add-comment(class="btn btn-default" onclick="") Add comment
+			button#edit-listing(class="btn btn-default" onclick="") Edit listing
+			button#delete-listing(class="btn btn-default" onclick="") Delete listing
+		
+		h3 Comments
+		section#comments-section
+			form#new-comment
+				label(for='comment') Comment:
+				textarea.form-control(rows='5', id='comment-input')
+				button(class='btn btn-success', type='submit') Submit
+				
+			div.comment
+				h4 some dude's name
+				p the date
+				p blahbalghaihoieioe ie f iojfeijoef ijsofjiisj fejsi ejios ijof eijesiijs oei
+				
+			div.comment
+				h4 some dude's name
+				p the date
+				p blahbalghaihoieioe ie f iojfeijoef ijsofjiisj fejsi ejios ijof eijesiijs oei
+		
+		section#listings
+			h3 Related Listings
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+			div.listing
+				a(href='')
+					img(width='174', height='130', src='')
+				a.listing-info(href='')
+					h4.title derp
+					p.desc abcd
+					h4.price $19.95
+	
