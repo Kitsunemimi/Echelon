@@ -2,7 +2,8 @@ extends layout
 
 block content
 	div.login-container#signup-orange
-		div#login-error.alert.alert-danger.fullwidth= error
+		if error
+			div#login-error.alert.alert-danger.fullwidth= error
 		
 		h3 Register for an account
 		form#register(class="login-form", role="form", method="post")

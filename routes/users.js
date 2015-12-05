@@ -1,4 +1,6 @@
 var express = require('express');
+var formidable = require('formidable');
+var fs = require('fs-extra');
 var router = express.Router();
 
 function addUser(email, password) {
@@ -35,14 +37,16 @@ function addUser(email, password) {
 	return id;
 }
 
-function editUser(id, name, picture, location) {
+function editUser(id, name, picture, location, description) {
 	// Edit a user by id
 	User.findOne({id: id}, function (err, user) {
 		// Assume that avatar has already been saved on server
 		user.name = name;
-		user.avatar = picture;
 		user.description = description;
 		user.location = location;
+		if(picture) {
+			user.picture = picture;
+		}
 		
 		user.save(function (err) {
 			if(err) {
@@ -94,14 +98,7 @@ function removeUser(id) {
 	return true;
 }
 
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	// not sure if we need a listing for all users, so will probably kill this
-	// block
-	res.send('respond with a resource');
-});
-
+/**************** Routes ****************/
 // Create a new user
 router.get('/new', function(req, res, next) {
 	var email = req.query.email;
@@ -123,7 +120,156 @@ router.get('/new', function(req, res, next) {
 
 // Get specific user profile
 router.get('/:id', function(req, res, next) {
-	res.render('profile', {title: 'Express', id: req.params.id});
+	var id = req.params.id;
+	var name = "";
+	
+	var success = "";
+	var error = "";
+	
+	if(req.query.editSuccess == "true") {
+		success = 'Profile successfully updated.';
+	} else if (req.query.editSuccess == "false") {
+		error = 'Permission denied.';
+	} else if (req.query.pwdChangeSuccess == "true") {
+		success = 'Password successfully updated.';
+	} else if (req.query.pwdChangeSuccess == "error1") {
+		error = 'Permission denied.';
+	} else if (req.query.pwdChangeSuccess == "error2") {
+		error = 'Current password incorrect.';
+	} else if (req.query.pwdChangeSuccess == "error3") {
+		error = "Passwords don't match.";
+	} else if (req.query.pwdChangeSuccess == "error4") {
+		error = "A server error has occurred";
+	}
+	
+	// Find the user by id
+	User.findOne({id: id}, function (err, user) {
+		if(!user) {
+			// 404 not found
+			res.redirect("/404");
+			return;
+		}
+		
+		res.locals.profileUser = user;
+		if(user.name) {
+			name = user.name;
+		} else {
+			name = user.email;
+		}
+		
+		res.render('profile', {title: 'Users - ' + name + ' - KiBay', success: success, error: error});
+	});
+});
+
+// Edit profile
+router.post('/:id', function(req, res, next) {
+	if(!req.user || req.user.id != req.params.id) {
+		res.redirect('/users/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	var name;
+	var picture = "";
+	var fileType;
+	var location;
+	var description;
+	
+	// Copy/paste avatar spaghetti code from A4
+	var form = new formidable.IncomingForm();
+	form.parse(req, function(err, fields, files) {
+		name = fields.name;
+		location = fields.location;
+		description = fields.description;
+		fileType = files.picture.type.split('/')[0];
+	});
+	
+	form.on("end", function(fields, files) {
+		var temp_path;
+		var file_extension;
+		var new_location = "./public/images/";
+		if(fileType == "image") {
+			temp_path = this.openedFiles[0].path;
+			name_split = this.openedFiles[0].name.split('.');
+			file_extension = name_split[name_split.length - 1];
+			
+			// Attempt to save picture if given.
+			var file_name = "avatar-" + req.params.id + "." + file_extension;
+			if(file_extension) {
+				fs.copy(temp_path, new_location + file_name, function(err) {  
+					if (err) {
+						console.log("Avatar could not be saved: " + err);
+						return;
+					}
+				});
+				picture = "images/" + file_name;
+			}
+		}
+		
+		editUser(req.params.id, name, picture, location, description);
+		res.redirect('/users/' + req.params.id + '?editSuccess=true');
+	});
+});
+
+// Change password
+router.post('/:id/changePwd', function(req, res, next) {
+	if(!req.user || req.user.id != req.params.id) {
+		res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=error1');
+		return;
+	}
+	
+	var current = req.body.curPwd;
+	var newPass = req.body.newPwd;
+	var confirm = req.body.confirmPwd;
+	
+	if(newPass != confirm) {
+		res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=error3');
+		return;
+	}
+	
+	User.findOne({id: req.params.id}, function (err, user) {
+		if(!user) {
+			res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=error4');
+			return;
+		}	
+		if(current != user.password) {
+			res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=error2');
+			return;
+		}
+		
+		// If we passed all those checks, then change the password
+		user.password = newPass;
+		user.save(function (err) {
+			if(err) {
+				console.log("Updating password failed.");
+				return;
+			}
+		});
+		
+		res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=true');
+		console.log(user.email + "'s password updated.");
+	});	
+});
+
+// Make admin
+router.get('/:id/toggleAdmin', function(req, res, next) {
+	if(!req.user || !req.user.admin) {
+		res.redirect('/users/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	toggleAdmin(req.params.id);
+	res.redirect('/users/' + req.params.id + '?editSuccess=true');
+});
+
+// Delete profile
+router.get('/:id/delete', function(req, res, next) {
+	if(!req.user || !req.user.admin) {
+		res.redirect('/users/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	removeUser(req.params.id);
+	res.redirect('/');
 });
 
 module.exports = router;

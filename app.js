@@ -48,7 +48,7 @@ var ListingSchema = mongoose.Schema({
 	price: Number,
 	picture: String, 
 	comments: [{poster: String, date: Date, text: String}],
-	date: {type: Date, default: Date.now},
+	date: Date,
 	hits: Number,
 	tags: Array
 });

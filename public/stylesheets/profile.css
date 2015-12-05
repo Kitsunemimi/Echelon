@@ -55,11 +55,45 @@
 	margin-left: -400px;
 	width: 800px;
 	height: 80%;
+	padding: 18px;
 	background-color: white;
 	border-radius: 10px;
 	border: 1px solid black;
 	box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);
 	z-index: 3;
 	display: none;
-	overflow: scroll;
+	overflow-y: scroll;
 }
+
+/* Editor */
+.input-group, #that-one-label {
+	margin-bottom: 15px;
+}
+#edit-profile-form {
+	margin-bottom: 30px;
+}
+
+/* File inputs, found at http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/ */
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	background: red;
+	cursor: inherit;
+	display: block;
+}
+input[readonly] {
+	background-color: white !important;
+	cursor: text !important;
+}
+

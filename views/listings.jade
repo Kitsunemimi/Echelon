@@ -4,7 +4,11 @@ block content
 	div#listing-container
 		div#listing-container2
 			div#listing-pictures
-				img(width='200', height='150', src='')
+				if listing.picture
+					img(width='200', height='150', src='../'+listing.picture)
+				else
+					img(width='200', height='150', src='../images/no-image.png')
+				
 				div#other-pics-container
 					img.other-pics(src='')
 					img.other-pics(src='')
@@ -13,17 +17,23 @@ block content
 				
 			div#listing-inset
 			div#full-listing-info
-				h2.no-margin Listing Title
-				h4 <b>Price:</b> $19.95
-				p <b>Seller:</b> asdf@derp.ca
-				p <b>Location:</b> asdf
-				p <b>Description:</b> asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
+				h2.no-margin #{listing.title}
+				h4 <b>Price:</b> $#{price}
+				p <b>Seller:</b> 
+					a(href="/users/"+listing.poster) #{email}
+				p <b>Location:</b> #{location}
+				p <b>Listed on:</b> #{date}
+				p <b>Number of hits:</b> #{listing.hits}
+				p <b>Description:</b> #{listing.description}
 		
 		div#listing-buttons
-			button#contact-seller(class="btn btn-default" onclick="toggleEdit();") Contact seller
-			button#add-comment(class="btn btn-default" onclick="") Add comment
-			button#edit-listing(class="btn btn-default" onclick="") Edit listing
-			button#delete-listing(class="btn btn-default" onclick="") Delete listing
+			if user && user.id != listing.poster
+				button#contact-seller(class="btn btn-default" onclick="toggleEdit();") Contact seller
+			a#add-comment(href="#comments-section" class="btn btn-default" onclick="openCommentsBox();") Add comment
+			if user && user.id == listing.poster
+				a#edit-listing(href=listing.id+"/edit" class="btn btn-default") Edit listing
+			if user && (user.id == listing.poster || user.admin)
+				a#delete-listing(href=listing.id+"/delete" class="btn btn-default") Delete listing
 		
 		h3 Comments
 		section#comments-section
