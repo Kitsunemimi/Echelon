@@ -101,17 +101,16 @@ function removeUser(id) {
 // reads listing ID's from a user.listings, grabs all of the actual listings from the database
 function getUserListings(id) {
 	
-	//find the user
-	User.findOne(req.user, function(err, user){
+	//find all listings, sorts (-1 sorts descending) & returns most recent date
+	Listing.findOne({id: id}, function (err, user){
 		if(err){
 			console.log("Error in finding user and returning their listings");
 			return -1;
 		}
-		
-		return user.listing;
-		
-	}); 
-});
+		return user.listings;
+	});
+
+}
 
 /**************** Routes ****************/
 // Create a new user
