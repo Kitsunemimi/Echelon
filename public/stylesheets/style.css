@@ -8,7 +8,7 @@ body {
 	flex-direction: column;
 }
 header{
-	height: 55px;
+	height: 65px;
 	width: 100%;
 	position: fixed;
 	top: -5px;
@@ -23,13 +23,35 @@ header{
 	border: 1px solid black;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
 }
+#header-logo {
+	background-image: url('../images/logo.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100%;
+	width: 256px;
+	display: inline-block;
+	float: left;
+	border-right: 1px solid #999999;
+}
+#search {
+	height: 100%;
+	width: 792px;
+	display: flex;
+	flex-direction: row;
+	padding: 12px 24px;
+	float: right;
+}
+#search-box {
+	flex: 1;
+	margin-right: 16px;
+}
 main {
 	background-color: white;
 	width: 1000px;
 	margin: auto;
 	flex: 1 0 auto;
 	border: 1px solid black;
-	padding: 50px 0px 20px;
+	padding: 60px 0px 20px;
 	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 footer {

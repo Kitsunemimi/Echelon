@@ -33,7 +33,7 @@ block content
 		div#profile-buttons
 			if profileUser.id == user.id
 				button#edit-profile(class="btn btn-default" onclick="toggleEdit();") Edit profile
-			if user.admin
+			if user.admin && profileUser.id > 0
 				a#delete-user(href=profileUser.id+"/delete", class="btn btn-default" onclick="") Delete profile
 				if profileUser.admin
 					a#de-admin(href=profileUser.id+"/toggleAdmin", class="btn btn-default" onclick="") Revoke admin
@@ -76,7 +76,7 @@ block content
 		div#editor
 			div.container-flexible
 				div.col-md-12
-					form#edit-profile-form(role="form", action="", method="post", enctype="multipart/form-data")
+					form#edit-profile-form(role="form", method="post", enctype="multipart/form-data")
 						div.form-group
 							label(for="edit-name") Name:
 							input#edit-name.form-control(type="text", name="name", value=user.name)

@@ -167,7 +167,7 @@ router.post('/:id', function(req, res, next) {
 		res.redirect('/users/' + req.params.id + '?editSuccess=false');
 		return;
 	}
-		
+	
 	var name;
 	var picture = "";
 	var fileType;
@@ -197,7 +197,7 @@ router.post('/:id', function(req, res, next) {
 			if(file_extension) {
 				fs.copy(temp_path, new_location + file_name, function(err) {  
 					if (err) {
-						console.log("Avatar count not be saved: " + err);
+						console.log("Avatar could not be saved: " + err);
 						return;
 					}
 				});

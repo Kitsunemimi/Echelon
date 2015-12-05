@@ -1,0 +1,41 @@
+extends layout
+
+block content
+	div#listing-edit-container
+		if error
+			div#edit-error.alert.alert-danger= error
+	
+		if(action == "create")
+			h2 Create a new listing
+		else
+			h2 Edit listing
+		
+		form(role="form", method="post", enctype="multipart/form-data")
+			div.form-group
+				label(for="edit-title") Title:
+				input#edit-title.form-control(type="text", name="title", value=listing.title, required)
+			
+			div.form-group(style="display: none")
+				label(for="poster-ID") Poster ID:
+				input#poster-ID.form-control(type="number", name="poster", value=listing.poster, readonly)
+				
+			div.form-group
+				label(for="edit-price") Price:
+				input#edit-price.form-control(type="number", name="price", value=listing.price, required)
+			
+			label Picture:
+			div.input-group
+				span.input-group-btn
+					span.btn.btn-primary.btn-file Browse&hellip;
+						input#edit-picture(type="file", name="picture")
+				input.form-control(type="text", readonly)
+				
+			div.form-group
+				label(for="edit-description") Description:
+				textarea#edit-description.form-control(rows="5", name="description", value=listing.description, required)
+				
+			div.form-group
+				label(for="edit-tags") Tags (space separated):
+				input#edit-tags.form-control(type="text", name="tags", value=listing.tags)
+				
+			button.btn.btn-success(type="submit") Submit
