@@ -163,7 +163,7 @@ router.get('/:id', function(req, res, next) {
 
 // Edit profile
 router.post('/:id', function(req, res, next) {
-	if(req.user.id != req.params.id) {
+	if(!req.user || req.user.id != req.params.id) {
 		res.redirect('/users/' + req.params.id + '?editSuccess=false');
 		return;
 	}
@@ -212,7 +212,7 @@ router.post('/:id', function(req, res, next) {
 
 // Change password
 router.post('/:id/changePwd', function(req, res, next) {
-	if(req.user.id != req.params.id) {
+	if(!req.user || req.user.id != req.params.id) {
 		res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=error1');
 		return;
 	}
@@ -248,6 +248,28 @@ router.post('/:id/changePwd', function(req, res, next) {
 		res.redirect('/users/' + req.params.id + '?pwdChangeSuccess=true');
 		console.log(user.email + "'s password updated.");
 	});	
+});
+
+// Make admin
+router.get('/:id/toggleAdmin', function(req, res, next) {
+	if(!req.user || !req.user.admin) {
+		res.redirect('/users/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	toggleAdmin(req.params.id);
+	res.redirect('/users/' + req.params.id + '?editSuccess=true');
+});
+
+// Delete profile
+router.get('/:id/delete', function(req, res, next) {
+	if(!req.user || !req.user.admin) {
+		res.redirect('/users/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	removeUser(req.params.id);
+	res.redirect('/');
 });
 
 module.exports = router;

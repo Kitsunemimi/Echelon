@@ -34,11 +34,11 @@ block content
 			if profileUser.id == user.id
 				button#edit-profile(class="btn btn-default" onclick="toggleEdit();") Edit profile
 			if user.admin
-				button#delete-user(class="btn btn-default" onclick="") Delete profile
+				a#delete-user(href=profileUser.id+"/delete", class="btn btn-default" onclick="") Delete profile
 				if profileUser.admin
-					button#de-admin(class="btn btn-default" onclick="") Revoke admin
+					a#de-admin(href=profileUser.id+"/toggleAdmin", class="btn btn-default" onclick="") Revoke admin
 				else
-					button#make-admin(class="btn btn-default" onclick="") Make admin
+					a#make-admin(href=profileUser.id+"/toggleAdmin" class="btn btn-default" onclick="") Make admin
 		
 		section#listings
 			h3 #{profileUser.email}'s Listings
