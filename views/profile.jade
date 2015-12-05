@@ -28,12 +28,13 @@ block content
 					p <b>Description:</b> #{profileUser.description}
 				else
 					p <b>Description:</b> <i>This user has no description.</i>
+				p <b>Listings:</b> #{profileUser.listings}
 				
 		
 		div#profile-buttons
-			if profileUser.id == user.id
+			if user && profileUser.id == user.id
 				button#edit-profile(class="btn btn-default" onclick="toggleEdit();") Edit profile
-			if user.admin && profileUser.id > 0
+			if user && user.admin && profileUser.id > 0
 				a#delete-user(href=profileUser.id+"/delete", class="btn btn-default" onclick="") Delete profile
 				if profileUser.admin
 					a#de-admin(href=profileUser.id+"/toggleAdmin", class="btn btn-default" onclick="") Revoke admin
@@ -71,7 +72,7 @@ block content
 					p.desc abcd
 					h4.price $19.95
 	
-	if profileUser.id == user.id
+	if user && profileUser.id == user.id
 		div#shade(onclick="toggleEdit();")
 		div#editor
 			div.container-flexible

@@ -14,7 +14,7 @@ function addListing(poster, title, description, price, picture, tags) {
 		title: title,
 		description: description,
 		price: price,
-		picture: "",
+		picture: picture,
 		comments: [],
 		date: date,
 		hits: 0,
@@ -26,6 +26,20 @@ function addListing(poster, title, description, price, picture, tags) {
 			console.log("Error occurred when creating listing");
 			return -1;
 		}
+		
+		// Find the poster and add the listing to their listings
+		User.findOne({id: poster}, function (err, user) {
+			if(user) {
+				user.listings.push(id);
+				
+				user.save(function (err) {
+				if(err) {
+					console.log("Error while updating user's listings.");
+					return -1;
+				}
+			});
+			}
+		});
 		
 		console.log("Listing creation successful");
 		stats.listCount++;
@@ -65,10 +79,29 @@ function editListing(id, title, description, price, picture, tags) {
 function removeListing(id) {
 	Listing.findOne({id: id}, function (err, listing) {
 		var title = listing.title;
+		var poster = listing.poster;
 		Listing.remove({id: id}, function (err) {
 			if(err) {
 				return false;
 			}
+			
+			// Find the poster and remove the listing from their listings
+			User.findOne({id: poster}, function (err, user) {
+				if(user) {
+					var index = user.listings.indexOf(id);
+					
+					if(index != -1) {
+						array.splice(index, 1);
+					}
+					
+					user.save(function (err) {
+						if(err) {
+							console.log("Error while updating user's listings.");
+							return -1;
+						}
+					});
+				}
+			});
 			
 			console.log("Listing " + id + " - " + title + " has been deleted.");
 		});
@@ -94,7 +127,6 @@ var processForm = function(req, res, next) {
 		req.form.tags = fields.tags.split(' ');
 		fileType = files.picture.type.split('/')[0];
 		
-		console.log(fields);
 		if(!req.user || req.user.id != req.form.posterID) {
 			req.error = "Permission denied."
 			next();
@@ -118,7 +150,7 @@ var processForm = function(req, res, next) {
 			file_extension = name_split[name_split.length - 1];
 			
 			// Attempt to save picture if given.
-			var file_name = "listing-" + id + "." + file_extension;
+			var file_name = "listing-" + req.form.id + "." + file_extension;
 			if(file_extension) {
 				fs.copy(temp_path, new_location + file_name, function(err) {  
 					if (err) {
@@ -181,9 +213,66 @@ router.post('/create', processForm, function(req, res, next) {
 	res.redirect('/listings/' + id);
 });
 
+// Delete a listing
+router.get('/:id/delete', function(req, res, next) {
+	if(!req.user || (req.user.listings.indexOf(req.params.id) == -1 && !req.user.admin)) {
+		// If you don't own the listing and you're not an admin, then NO.
+		res.redirect('/listings/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	status = removeListing(req.params.id);
+	if(status) {
+		res.redirect('/');
+	} else {
+		res.redirect('/listings/' + req.params.id + '?editSuccess=false');
+	}
+});
+
 // Get specific listing by id
 router.get('/:id', function(req, res, next) {
-	res.render('listings', {title: 'Express', id: req.params.id});
+	var id = req.params.id;
+	
+	var success = "";
+	var error = "";
+	
+	if(req.query.editSuccess == "true") {
+		success = 'Listing successfully updated.';
+	}
+	
+	// Find the listing by id
+	Listing.findOne({id: id}, function (err, listing) {
+		if(!listing) {
+			// 404 not found
+			res.redirect("/404");
+			return;
+		}
+		
+		res.locals.listing = listing;
+		
+		// Find the email of the original poster
+		User.findOne({id: listing.poster}, function (err, user) {
+			var posterEmail = "";
+			var posterLocation = "Unknown";
+			if(user) {
+				posterEmail = user.email;
+				if(user.location) {
+					posterLocation = user.location;
+				}
+			}
+			
+			res.render('listings', {title: 'Listings - ' + listing.title + ' - KiBay', email: posterEmail, location: posterLocation, price: listing.price.toFixed(2), date: listing.date.toString().substring(4, 15)});
+			
+			// Increment hits counter
+			listing.hits++;
+			listing.save(function (err) {
+				if(err) {
+					console.log("Updating hits failed.");
+					return -1;
+				}
+			});
+		});
+	});
 });
 
 module.exports = router;
