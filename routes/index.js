@@ -1,6 +1,32 @@
 var express = require('express');
 var router = express.Router();
 
+/* Looks at all listings & returns the one with highest hits*/
+function getTopListing() {
+	
+	//find all listings, sorts (-1 sorts descending) & returns highest
+	Listing.find().sort({hits: -1}).limit(1){
+		if (err){
+			console.log("Error in finding highest hits");
+			return -1;
+		}
+	}
+}
+
+/* Looks at all listings & returns 8 most recent listings by date*/
+function getRecentListings() {
+	
+	//find all listings, sorts (-1 sorts descending) & returns most recent date
+	Listing.find().sort({date: -1}).limit(8){
+		if (err){
+			console.log("Error in finding most recent listings");
+			return -1;
+		}
+	}
+}
+
+
+/**************** Routes ****************/
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	var name = ""

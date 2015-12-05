@@ -98,6 +98,21 @@ function removeUser(id) {
 	return true;
 }
 
+// reads listing ID's from a user.listings, grabs all of the actual listings from the database
+function getUserListings(id) {
+	
+	//find the user
+	User.findOne(req.user, function(err, user){
+		if(err){
+			console.log("Error in finding user and returning their listings");
+			return -1;
+		}
+		
+		return user.listing;
+		
+	}); 
+});
+
 /**************** Routes ****************/
 // Create a new user
 router.get('/new', function(req, res, next) {
