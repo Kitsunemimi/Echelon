@@ -3,13 +3,27 @@ extends layout
 block content
 	div#profile-container
 		div#profile-container2
-			img(width='200', height='200', src='', style='float: left')
+			if profileUser.picture
+				img(width='200', height='200', src=profileUser.picture, style='float: left')
+			else 
+				img(width='200', height='200', src='../images/default-avatar.png', style='float: left')
+			
 			div#profile-inset
 			div#profile-info
-				h2.no-margin Name
-				p <b>Email:</b> asdf@derp.ca
-				p <b>Location:</b> asdf
-				p <b>Description:</b> asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf
+				if profileUser.name
+					h2.no-margin #{profileUser.name}
+				else
+					h2.no-margin #{profileUser.email}
+				p <b>Email:</b> #{profileUser.email}
+				if profileUser.description
+					p <b>Location:</b> #{profileUser.location}
+				else
+					p <b>Location:</b> Unknown
+				if profileUser.description
+					p <b>Description:</b> #{profileUser.description}
+				else
+					p <b>Description:</b> <i>This user has no description.</i>
+				
 		
 		div#profile-buttons
 			button#edit-profile(class="btn btn-default" onclick="toggleEdit();") Edit profile
@@ -18,7 +32,7 @@ block content
 			button#de-admin(class="btn btn-default" onclick="") Revoke admin
 		
 		section#listings
-			h3 #{name}'s Listings
+			h3 #{profileUser.email}'s Listings
 			div.listing
 				a(href='')
 					img(width='174', height='130', src='')

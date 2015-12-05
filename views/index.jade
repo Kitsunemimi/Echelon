@@ -14,31 +14,37 @@ block content
 						h4.price $19.95
 			
 			div#welcome-container
-				div.welcome#guest
-					div.welcome-spacer
-					h2 Welcome guest!
-					p Click a button to log in or sign up.
-					div.container-fluid
-						div.col-md-6
-							a(href='/login' class='btn btn-success fullwidth') Log In
-						div.col-md-6
-							a(href='/register' class='btn btn-success fullwidth') Register
-					div.welcome-spacer
-					
-				div.welcome#logged-in
-					div.welcome-spacer
-					h2 Welcome #{name}!
-					p What would you like to do?
-					div.container-fluid
-						div.col-md-6
-							button(href='/' class='btn btn-info fullwidth') Your listings
-						div.col-md-6
-							button(href='/' class='btn btn-info fullwidth') Your profile
-						div.col-md-6
-							button(href='/' class='btn btn-success fullwidth') Create listing
-						div.col-md-6
-							a(href='/logout' class='btn btn-info fullwidth') Log out
-					div.welcome-spacer
+				if user
+					div.welcome#logged-in
+						div.welcome-spacer
+						if user.name
+							h3 Welcome #{user.name}!
+						else
+							h3 Welcome #{user.email}!
+						
+						p What would you like to do?
+						div.container-fluid
+							div.col-md-6
+								button(href='/' class='btn btn-info fullwidth') Your listings
+							div.col-md-6
+								a(href='/users/'+user.id class='btn btn-info fullwidth') Your profile
+							div.col-md-6
+								button(href='/' class='btn btn-success fullwidth') Create listing
+							div.col-md-6
+								a(href='/logout' class='btn btn-info fullwidth') Log out
+						div.welcome-spacer
+				
+				else
+					div.welcome#guest
+						div.welcome-spacer
+						h2 Welcome guest!
+						p Click a button to log in or sign up.
+						div.container-fluid
+							div.col-md-6
+								a(href='/login' class='btn btn-success fullwidth') Log In
+							div.col-md-6
+								a(href='/register' class='btn btn-success fullwidth') Register
+						div.welcome-spacer
 		
 		section#listings
 			h3 Recent Listings

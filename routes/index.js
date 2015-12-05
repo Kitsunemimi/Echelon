@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 			name = req.user.email;
 		}
 	}
-	res.render('index', {title: "KiBay", name: name});
+	res.render('index', {title: "KiBay"});
 });
 
 /* Other general routes */
@@ -47,7 +47,7 @@ router.post('/login', function(req, res, next) {
 	}
 	
 	if(error) {
-		res.render('login', {title: "Sign up - KiBay", error: error});
+		res.render('login', {title: "Log in - KiBay", error: error});
 		return;
 	}
 	
@@ -55,17 +55,17 @@ router.post('/login', function(req, res, next) {
 		if(err) {
 			// Something went wrong
 			console.log("Error occurred during login");
-			res.render('login', {title: "Sign up - KiBay", error: "Something went wrong at the server."});
+			res.render('login', {title: "Log in - KiBay", error: "Something went wrong at the server."});
 			return;
 		}
 		
 		if(!user) {
 			console.log("User not found!");
-			res.render('signup', {title: "Sign up - KiBay", error: "Username or password incorrect."});
+			res.render('login', {title: "Log in - KiBay", error: "Username or password incorrect."});
 			return;
 		} else if(user.password != password) {
 			console.log("Password incorrect");
-			res.render('signup', {title: "Sign up - KiBay", error: "Username or password incorrect."});
+			res.render('login', {title: "Log in - KiBay", error: "Username or password incorrect."});
 			return;
 		} else {
 			// Log in the user
@@ -133,6 +133,13 @@ router.post('/register', function(req, res, next) {
 			res.redirect('/users/new?email=' + email + '&password=' + password);
 		}
 	});
+});
+
+// 404 route
+router.get('/404', function(req, res, next) {
+	// res.render('404', title: "404 - KiBay");
+	res.status(404).send("Content not found!");
+	return;
 });
 
 module.exports = router;

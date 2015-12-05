@@ -94,14 +94,7 @@ function removeUser(id) {
 	return true;
 }
 
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-	// not sure if we need a listing for all users, so will probably kill this
-	// block
-	res.send('respond with a resource');
-});
-
+/**************** Routes ****************/
 // Create a new user
 router.get('/new', function(req, res, next) {
 	var email = req.query.email;
@@ -123,7 +116,26 @@ router.get('/new', function(req, res, next) {
 
 // Get specific user profile
 router.get('/:id', function(req, res, next) {
-	res.render('profile', {title: 'Express', id: req.params.id});
+	var id = req.params.id;
+	var name = ""
+	
+	// Find the user by id
+	User.findOne({id: id}, function (err, user) {
+		if(!user) {
+			// 404 not found
+			res.redirect("/404");
+			return;
+		}
+		
+		res.locals.profileUser = user;
+		if(user.name) {
+			name = user.name;
+		} else {
+			name = user.email;
+		}
+		res.render('profile', {title: name + ' - KiBay'});
+		
+	});
 });
 
 module.exports = router;

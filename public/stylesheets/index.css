@@ -31,13 +31,6 @@
 	flex: 1;
 }
 
-#guest {
-	display: flex;
-}
-#logged-in {
-	display: none;
-}
-
 .top-listing {
 	width: 500px;
 	height: 220px;
