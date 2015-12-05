@@ -4,27 +4,27 @@ var router = express.Router();
 /* Looks at all listings & returns the one with highest hits*/
 function getTopListing() {
 	
-	//find all listings, sorts (-1 sorts descending) & returns highest
-	Listing.find().sort({hits: -1}).limit(1){
-		if (err){
+	Listing.find({}, {sort: {hits: -1}, limit: 1}, function (err, listing){
+		if(err){
 			console.log("Error in finding highest hits");
 			return -1;
 		}
-	}
+	return listing;
+	});
 }
 
 /* Looks at all listings & returns 8 most recent listings by date*/
 function getRecentListings() {
 	
 	//find all listings, sorts (-1 sorts descending) & returns most recent date
-	Listing.find().sort({date: -1}).limit(8){
-		if (err){
-			console.log("Error in finding most recent listings");
+	Listing.find({}, {sort: {date: -1}, limit: 8}, function (err, listings){
+		if(err){
+			console.log("Error in finding highest hits");
 			return -1;
 		}
-	}
+		return listings;
+	});
 }
-
 
 /**************** Routes ****************/
 /* GET home page. */
