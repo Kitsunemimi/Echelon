@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div#search-container
+		div#categories-container
+			h3.no-margin Categories
+			p Categories are not yet available at this time.
+		
+		div#search-listings
+			each listing in listings
+				div.search-listing
+					a(href='/listings/'+listing.id)
+						if listing.picture
+							img(width='170', height='128', src='../'+listing.picture, style="float: left")
+						else
+							img(width='170', height='128', src='../images/no-image.png', style="float: left")
+					
+					a.search-listing-info(href='/listings/'+listing.id)
+						h4.title= listing.title
+						p.desc= listing.description
+						h4.price $#{listing.price.toFixed(2)}
+				
+				
