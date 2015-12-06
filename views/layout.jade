@@ -9,21 +9,18 @@ html
 		link(rel='stylesheet', href='/stylesheets/profile.css')
 		link(rel='stylesheet', href='/stylesheets/listing.css')
 		link(rel='stylesheet', href='/stylesheets/listing-edit.css')
+		link(rel='stylesheet', href='/stylesheets/search.css')
 		script(src='http://code.jquery.com/jquery-2.1.4.min.js')
 		script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
-		script(src='/javascripts/profile.js')
-		script(src='/javascripts/listings.js')
+		script(src='/javascripts/utils.js')
 	body
 		header
 			div#header-inner
 				a#header-logo(href='/')
 				form#search.form-inline(action="/search")
-					input#search-box.form-control(type="text", name="q", placeholder="Search KiBay")
+					input#search-box.form-control(type="text", name="q", value=query, placeholder="Search KiBay")
 					button.btn.btn-default(type="submit") Submit
 		main
 			block content
 		footer
 			div#footer-inner
-				p herpderp
-				p diaehfah
-				

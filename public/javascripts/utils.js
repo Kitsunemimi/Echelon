@@ -3,6 +3,10 @@ function toggleEdit(){
 	$("#editor").fadeToggle("fast");
 }
 
+function openCommentsBox() {
+	$("#new-comment").animate({height: "222px"});
+}
+
 // File inputs, found at http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
 $(document).on('change', '.btn-file :file', function() {
 	var input = $(this),

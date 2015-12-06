@@ -42,20 +42,20 @@ block content
 		
 		h3 Comments
 		section#comments-section
-			form#new-comment
+			form#new-comment(action=listing.id+"/addComment")
 				label(for='comment') Comment:
-				textarea.form-control(rows='5', id='comment-input')
+				textarea.form-control(rows='5', name="comment", id='comment-input')
 				button(class='btn btn-success', type='submit') Submit
-				
-			div.comment
-				h4 some dude's name
-				p the date
-				p blahbalghaihoieioe ie f iojfeijoef ijsofjiisj fejsi ejios ijof eijesiijs oei
-				
-			div.comment
-				h4 some dude's name
-				p the date
-				p blahbalghaihoieioe ie f iojfeijoef ijsofjiisj fejsi ejios ijof eijesiijs oei
+			
+			if listing.comments.length > 0
+				each comment in listing.comments
+					div.comment
+						h4= comment.poster
+						p= comment.date.toString().substring(4, 15)
+						p= comment.text
+			else
+				p This listing has no comments yet. Have a question? Feel free to 
+					a#add-comment(onclick="openCommentsBox();") ask one.
 		
 		section#listings
 			h3 Related Listings
@@ -88,3 +88,23 @@ block content
 					p.desc abcd
 					h4.price $19.95
 	
+	div#shade(onclick="toggleEdit();")
+	div#editor
+		form#send-email(role="form", action=listing.id+"/contact", method="post")
+			div.form-group
+				label(for="email-outgoing-address") Your email:
+				if user
+					input#email-outgoing-address.form-control(type="email", name="email", value=user.email, required)
+				else
+					input#email-outgoing-address.form-control(type="email", name="email", required)
+			
+			div.form-group
+				label(for="email-subject") Subject:
+				input#email-subject.form-control(type="text", name="subject", value="Inquiry about KiBay listing: "+listing.title, required)
+			
+			div.form-group
+				label(for="email-text") Text:
+				textarea#email-text.form-control(rows="5", name="text", placeholder="Enter your message here...")
+			
+			button.btn.btn-success(type="submit") Submit
+		

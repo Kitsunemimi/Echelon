@@ -265,6 +265,44 @@ router.get('/:id/delete', function(req, res, next) {
 	}
 });
 
+// Add a comment
+router.get('/:id/addComment', function(req, res, next) {
+	if(!req.user) {
+		res.redirect('/listings/' + req.params.id + '?commentSuccess=false');
+		return;
+	}
+	
+	Listing.findOne({id: req.params.id}, function (err, listing) {
+		if(!listing) {
+			res.redirect('/listings/' + req.params.id + '?editSuccess=false');
+			return;
+		}
+			
+		listing.comments.push({
+			poster: req.user.email,
+			date: new Date(),
+			text: req.query.comment
+		});
+		
+		listing.save(function (err) {
+			if(err) {
+				console.log("Adding comment failed.");
+				return;
+			}
+		});
+		
+		console.log("New comment added for " + listing.name + ".");
+		res.redirect('/listings/' + req.params.id + '?commentSuccess=true');
+	});
+});
+
+// Send emails
+router.post('/:id/contact', function(req, res, next) {
+	console.log(req.body);
+	
+	res.redirect("/listings/" + req.params.id);
+});
+
 // Get specific listing by id
 router.get('/:id', function(req, res, next) {
 	var id = req.params.id;
@@ -276,6 +314,10 @@ router.get('/:id', function(req, res, next) {
 		success = 'Listing successfully updated.';
 	} else if(req.query.editSuccess == "false") {
 		error = 'Permission denied.';
+	} else if(req.query.commentSuccess == "true") {
+		success = "New comment posted.";
+	} else if (req.query.commentSuccess == "false") {
+		error = "You must be logged in to comment.";
 	}
 	
 	// Find the listing by id
