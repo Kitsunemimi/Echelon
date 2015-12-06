@@ -42,17 +42,21 @@ block content
 		
 		section#listings
 			h3 #{profileUser.email}'s Listings
-			each listing in userListings
-				div.listing
-					a(href='/listings/'+listing.id)
-						if listing.picture
-							img(width='174', height='130', src='../'+listing.picture)
-						else
-							img(width='174', height='130', src='../images/no-image.png')
-					a.listing-info(href='/listings/'+listing.id)
-						h4.title= listing.title
-						p.desc= listing.description
-						h4.price $#{listing.price.toFixed(2)}
+			if userListings.length > 0
+				each listing in userListings
+					div.listing
+						a(href='/listings/'+listing.id)
+							if listing.picture
+								img(width='174', height='130', src='../'+listing.picture)
+							else
+								img(width='174', height='130', src='../images/no-image.png')
+						a.listing-info(href='/listings/'+listing.id)
+							h4.title= listing.title
+							p.desc= listing.description
+							h4.price $#{listing.price.toFixed(2)}
+			
+			else
+				p This user has no listings.
 	
 	if user && profileUser.id == user.id
 		div#shade(onclick="toggleEdit();")
@@ -77,7 +81,7 @@ block content
 						
 						div.form-group
 							label(for="edit-description") Description:
-							textarea#edit-description.form-control(rows="5", name="description", value=user.description)
+							textarea#edit-description.form-control(rows="5", name="description")= user.description
 						
 						button.btn.btn-default(type="submit") Submit
 				

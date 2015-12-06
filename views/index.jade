@@ -5,16 +5,24 @@ block content
 		div#index-container2
 			div#top-listing-container
 				h3.no-margin Top Listing
-				div.top-listing#main-listing
-					a(href='/listings/'+topListing.id)
-						if topListing.picture
-							img(width='293', height='220', src='../'+topListing.picture, style='float: left')
-						else
-							img(width='293', height='220', src='../images/no-image.png', style='float: left')
-					a.top-listing-info(href='/listings/'+topListing.id)
-						h4.title= topListing.title
-						p.desc= topListing.description
-						h4.price $#{topListing.price.toFixed(2)}
+				if topListing
+					div.top-listing#main-listing
+						a(href='/listings/'+topListing.id)
+							if topListing.picture
+								img(width='293', height='220', src='../'+topListing.picture, style='float: left')
+							else
+								img(width='293', height='220', src='../images/no-image.png', style='float: left')
+						a.top-listing-info(href='/listings/'+topListing.id)
+							h4.title= topListing.title
+							p.desc= topListing.description
+							h4.price $#{topListing.price.toFixed(2)}
+							
+				else
+					p There are currently no listings available. 
+					if user
+						a(href='/listings/create') Post yours now!
+					else
+						a(href='/register') Sign up to post a listing.
 			
 			div#welcome-container
 				if user
@@ -51,15 +59,19 @@ block content
 		
 		section#listings
 			h3 Recent Listings
-			each listing in recentListings
-				div.listing
-					a(href='/listings/'+listing.id)
-						if listing.picture
-							img(width='174', height='130', src='../'+listing.picture)
-						else
-							img(width='174', height='130', src='../images/no-image.png')
-					a.listing-info(href='/listings/'+listing.id)
-						h4.title= listing.title
-						p.desc= listing.description
-						h4.price $#{listing.price.toFixed(2)}
+			if recentListings.length > 0
+				each listing in recentListings
+					div.listing
+						a(href='/listings/'+listing.id)
+							if listing.picture
+								img(width='174', height='130', src='../'+listing.picture)
+							else
+								img(width='174', height='130', src='../images/no-image.png')
+						a.listing-info(href='/listings/'+listing.id)
+							h4.title= listing.title
+							p.desc= listing.description
+							h4.price $#{listing.price.toFixed(2)}
+			
+			else
+				p There are currently no listings posted!
 			
