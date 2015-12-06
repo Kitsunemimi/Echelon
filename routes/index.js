@@ -2,41 +2,35 @@ var express = require('express');
 var router = express.Router();
 
 /* Looks at all listings & returns the one with highest hits*/
-function getTopListing() {
-	
+var getTopListing = function(req, res, next) {
 	Listing.find().sort({hits: -1}).limit(1).exec(function(err,listings){
 		if(err){
 			console.log("Error in finding highest hits");
 			return -1;
 		}
-	return listing;
+		
+		res.topListing = listings[0];
+		next();
 	});
 }
 
 /* Looks at all listings & returns 8 most recent listings by date*/
-function getRecentListings() {
-	
+function getRecentListings(req, res, next) {
 	//find all listings, sorts (-1 sorts descending) & returns most recent date
 	Listing.find().sort({date: -1}).limit(8).exec(function(err,listings){
 		if(err){
 			console.log("Error in finding highest hits");
 			return -1;
 		}
-		return listings;
+		
+		res.recentListings = listings;
+		next();
 	});
 }
 
 /**************** Routes ****************/
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	var name = ""
-	if(req.user) {
-		if(req.user.name) {
-			name = req.user.name;
-		} else {
-			name = req.user.email;
-		}
-	}
+router.get('/', getTopListing, getRecentListings, function(req, res, next) {
 	res.render('index', {title: "KiBay"});
 });
 
