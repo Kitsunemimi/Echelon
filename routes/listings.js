@@ -18,7 +18,7 @@ function addListing(poster, title, description, price, picture, tags) {
 		comments: [],
 		date: date,
 		hits: 0,
-		tags: []
+		tags: tags
 	});
 	
 	newListing.save(function (err) {
