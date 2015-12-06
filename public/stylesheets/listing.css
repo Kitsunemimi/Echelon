@@ -28,6 +28,7 @@
 }
 #listing-inset {
 	display: inline-block;
+	vertical-align: top;
 	margin-left: -200px;
 	width: 200px;
 	height: 150px;
@@ -36,7 +37,6 @@
 }
 #full-listing-info {
 	display: inline-block;
-	float: right;
 	margin-left: 20px;
 	width: 540px;
 	min-height: 200px;

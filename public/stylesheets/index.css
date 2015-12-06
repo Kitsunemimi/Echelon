@@ -57,6 +57,7 @@
 	width: 174px;
 	height: 240px;
 	margin: 30px;
+	float: left;
 }
 .listing-info {
 	width: 174px;
@@ -68,4 +69,8 @@
 .listing-info:link, .listing-info:hover, .listing-info:active {
 	color: #333333;
 	text-decoration: none;
+}
+.listing .title, .listing .desc, .listing .price {
+	max-height: 20px;
+	overflow: hidden;
 }

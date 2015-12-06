@@ -42,34 +42,17 @@ block content
 		
 		section#listings
 			h3 #{profileUser.email}'s Listings
-			div.listing
-				a(href='')
-					img(width='174', height='130', src='')
-				a.listing-info(href='')
-					h4.title derp
-					p.desc abcd
-					h4.price $19.95
-			div.listing
-				a(href='')
-					img(width='174', height='130', src='')
-				a.listing-info(href='')
-					h4.title derp
-					p.desc abcd
-					h4.price $19.95
-			div.listing
-				a(href='')
-					img(width='174', height='130', src='')
-				a.listing-info(href='')
-					h4.title derp
-					p.desc abcd
-					h4.price $19.95
-			div.listing
-				a(href='')
-					img(width='174', height='130', src='')
-				a.listing-info(href='')
-					h4.title derp
-					p.desc abcd
-					h4.price $19.95
+			each listing in userListings
+				div.listing
+					a(href='/listings/'+listing.id)
+						if listing.picture
+							img(width='174', height='130', src='../'+listing.picture)
+						else
+							img(width='174', height='130', src='../images/no-image.png')
+					a.listing-info(href='/listings/'+listing.id)
+						h4.title= listing.title
+						p.desc= listing.description
+						h4.price $#{listing.price.toFixed(2)}
 	
 	if user && profileUser.id == user.id
 		div#shade(onclick="toggleEdit();")
