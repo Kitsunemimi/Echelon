@@ -4,7 +4,7 @@ var router = express.Router();
 /* Looks at all listings & returns the one with highest hits*/
 function getTopListing() {
 	
-	Listing.find({}, {sort: {hits: -1}, limit: 1}, function (err, listing){
+	Listing.find().sort({hits: -1}).limit(1).exec(function(err,listings){
 		if(err){
 			console.log("Error in finding highest hits");
 			return -1;
@@ -17,7 +17,7 @@ function getTopListing() {
 function getRecentListings() {
 	
 	//find all listings, sorts (-1 sorts descending) & returns most recent date
-	Listing.find({}, {sort: {date: -1}, limit: 8}, function (err, listings){
+	Listing.find().sort({date: -1}).limit(8).exec(function(err,listings){
 		if(err){
 			console.log("Error in finding highest hits");
 			return -1;
