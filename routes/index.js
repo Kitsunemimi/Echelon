@@ -9,7 +9,7 @@ var getTopListing = function(req, res, next) {
 			return -1;
 		}
 		
-		res.topListing = listings[0];
+		res.locals.topListing = listings[0];
 		next();
 	});
 }
@@ -23,7 +23,7 @@ function getRecentListings(req, res, next) {
 			return -1;
 		}
 		
-		res.recentListings = listings;
+		res.locals.recentListings = listings;
 		next();
 	});
 }

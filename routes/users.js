@@ -99,15 +99,17 @@ function removeUser(id) {
 }
 
 // reads listing ID's from a user.listings, grabs all of the actual listings from the database
-function getUserListings(id) {
+var getUserListings = function(req, res, next) {
+	var id = req.params.id;
 	
-	//find all listings, sorts (-1 sorts descending) & returns most recent date
-	Listing.findOne({id: id}, function (err, user){
+	Listing.find({poster: id}, function (err, listings){
 		if(err){
 			console.log("Error in finding user and returning their listings");
 			return -1;
 		}
-		return user.listings;
+		
+		res.locals.userListings = listings;
+		next();
 	});
 
 }
@@ -133,7 +135,7 @@ router.get('/new', function(req, res, next) {
 });
 
 // Get specific user profile
-router.get('/:id', function(req, res, next) {
+router.get('/:id', getUserListings, function(req, res, next) {
 	var id = req.params.id;
 	var name = "";
 	
