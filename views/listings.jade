@@ -2,6 +2,11 @@ extends layout
 
 block content
 	div#listing-container
+		if success
+			div#edit-success.alert.alert-success= success
+		if error
+			div#edit-error.alert.alert-danger= error
+		
 		div#listing-container2
 			div#listing-pictures
 				if listing.picture
@@ -18,11 +23,11 @@ block content
 			div#listing-inset
 			div#full-listing-info
 				h2.no-margin #{listing.title}
-				h4 <b>Price:</b> $#{price}
+				h4 <b>Price:</b> $#{listing.price.toFixed(2)}
 				p <b>Seller:</b> 
 					a(href="/users/"+listing.poster) #{email}
 				p <b>Location:</b> #{location}
-				p <b>Listed on:</b> #{date}
+				p <b>Listed on:</b> #{listing.date.toString().substring(4, 15)}
 				p <b>Number of hits:</b> #{listing.hits}
 				p <b>Description:</b> #{listing.description}
 		

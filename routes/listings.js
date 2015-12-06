@@ -60,7 +60,9 @@ function editListing(id, title, description, price, picture, tags) {
 		listing.title = title;
 		listing.description = description;
 		listing.price = price;
-		listing.picture = picture;
+		if(picture) {
+			listing.picture = picture;
+		}
 		listing.tags = tags;
 		
 		listing.save(function (err) {
@@ -91,7 +93,7 @@ function removeListing(id) {
 					var index = user.listings.indexOf(id);
 					
 					if(index != -1) {
-						array.splice(index, 1);
+						user.listings.splice(index, 1);
 					}
 					
 					user.save(function (err) {
@@ -113,7 +115,11 @@ function removeListing(id) {
 
 var processForm = function(req, res, next) {
 	req.form = {};
-	req.form.id = stats.listCount;
+	if(req.params.id) {
+		req.form.id = req.params.id;
+	} else {
+		req.form.id = stats.listCount;
+	}
 	req.form.picture = "";
 	var fileType;
 	
@@ -213,6 +219,36 @@ router.post('/create', processForm, function(req, res, next) {
 	res.redirect('/listings/' + id);
 });
 
+// Serve page to edit a listing
+router.get('/:id/edit', function(req, res, next) {
+	if(!req.user || req.user.listings.indexOf(req.params.id) == -1) {
+		res.redirect('/listings/' + req.params.id + '?editSuccess=false');
+		return;
+	}
+	
+	Listing.findOne({id: req.params.id}, function (err, listing) {
+		if(!listing) {
+			res.redirect('/listings/' + req.params.id + '?editSuccess=false');
+			return;
+		}
+			
+		res.locals.listing = listing
+		res.render('listings-edit', {title: "Edit listing - KiBay", action: "edit", error: req.query.error});
+	});
+});
+
+// Edit the listing
+router.post('/:id/edit', processForm, function(req, res, next) {
+	// Use middleware shared by the edit listings route to process the form
+	if(req.error) {
+		res.redirect('/listings/edit?error='+req.error);
+		return;
+	}
+	
+	editListing(req.params.id, req.form.title, req.form.description, req.form.price, req.form.picture, req.form.tags);
+	res.redirect('/listings/' + req.params.id + '?editSuccess=true');
+});
+
 // Delete a listing
 router.get('/:id/delete', function(req, res, next) {
 	if(!req.user || (req.user.listings.indexOf(req.params.id) == -1 && !req.user.admin)) {
@@ -238,6 +274,8 @@ router.get('/:id', function(req, res, next) {
 	
 	if(req.query.editSuccess == "true") {
 		success = 'Listing successfully updated.';
+	} else if(req.query.editSuccess == "false") {
+		error = 'Permission denied.';
 	}
 	
 	// Find the listing by id
@@ -261,7 +299,7 @@ router.get('/:id', function(req, res, next) {
 				}
 			}
 			
-			res.render('listings', {title: 'Listings - ' + listing.title + ' - KiBay', email: posterEmail, location: posterLocation, price: listing.price.toFixed(2), date: listing.date.toString().substring(4, 15)});
+			res.render('listings', {title: 'Listings - ' + listing.title + ' - KiBay', email: posterEmail, location: posterLocation, success: success, error: error});
 			
 			// Increment hits counter
 			listing.hits++;
