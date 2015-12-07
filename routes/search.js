@@ -5,10 +5,23 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 	var query = req.query.q.split(' ');
 	var matches = [];
-	
+	var userID = -1;
+
+	User.findOne({email: query}, function(err, user){
+		if(err){
+			console.log("Error occurred in search (User find).");
+			return;
+		}
+		if(user){
+			userID = user.id;
+			return userID;
+		}
+		
+	});
+		
 	Listing.find({}, function(err, listings) {
 		if(err) {
-			console.log("Error occurred in search.");
+			console.log("Error occurred in search (Listing find).");
 			return;
 		}
 		
@@ -43,10 +56,16 @@ router.get('/', function(req, res, next) {
 					}
 				}
 			}
+			
+			if(listings[i].poster == userID){
+				matches.push(listings[i]);
+			}
 		}
-		
+
+
 		res.locals.listings = matches;
 		res.render('search', {title: "Search - KiBay", query: query.join(' ')});
+		
 	});
 });
 
