@@ -7,6 +7,3 @@ In your favourite shell, browse to the repo directory and run the following comm
 * npm start
 
 The main server code is now located in bin/www
-
-## TODO
-Everything
