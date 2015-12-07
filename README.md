@@ -8,5 +8,6 @@ In your favourite shell, browse to the repo directory and run the following comm
 
 The main server code is now located in bin/www
 
-## TODO
-Everything
+## Report
+The report is located in [REPORT.pdf](https://github.com/Kitsunemimi/Echelon/blob/quickfix/REPORT.pdf)<br>
+The design layout is [here](http://i.imgur.com/UAa9KAz.png)
