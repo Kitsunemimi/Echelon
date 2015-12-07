@@ -7,3 +7,7 @@ In your favourite shell, browse to the repo directory and run the following comm
 * npm start
 
 The main server code is now located in bin/www
+
+## Report
+The report is located in [REPORT.pdf](https://github.com/Kitsunemimi/Echelon/blob/quickfix/REPORT.pdf)<br>
+The design layout is [here](http://i.imgur.com/UAa9KAz.png)
