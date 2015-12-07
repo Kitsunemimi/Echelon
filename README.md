@@ -12,3 +12,4 @@ The main server code is now located in bin/www
 The report is located in [REPORT.pdf](https://github.com/Kitsunemimi/Echelon/blob/quickfix/REPORT.pdf)<br>
 The design layout is [here](http://i.imgur.com/UAa9KAz.png) or see DesignLayout.png in root directory.<br>
 YouTube Link: [https://youtu.be/o9uAV6zw2z0](https://youtu.be/o9uAV6zw2z0)
+Updated YouTube Link: [https://youtu.be/Gln15Mpvrcg](https://youtu.be/Gln15Mpvrcg)
