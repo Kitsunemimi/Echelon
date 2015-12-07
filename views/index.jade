@@ -36,7 +36,7 @@ block content
 						p What would you like to do?
 						div.container-fluid
 							div.col-md-6
-								button(href='/' class='btn btn-info fullwidth') My listings
+								a(href='/search?q='+user.email class='btn btn-info fullwidth') My listings
 							div.col-md-6
 								a(href='/users/'+user.id class='btn btn-info fullwidth') My profile
 							div.col-md-6
