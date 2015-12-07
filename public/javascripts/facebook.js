@@ -2,7 +2,7 @@
 /*
 window.fbAsyncInit = function() {
     FB.init({
-        appId      : '195996104074388',
+        appId      : '195970627410269',
         xfbml      : true,
         version    : 'v2.5'
     });
@@ -52,7 +52,7 @@ function checkLoginState() {
 
 window.fbAsyncInit = function() {
     FB.init({
-        appId      : '195996104074388',
+        appId      : '195970627410269',
         cookie     : true,  // enable cookies to allow the server to access 
                     // the session
         xfbml      : true,  // parse social plugins on this page
